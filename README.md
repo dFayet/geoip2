@@ -106,7 +106,7 @@ php app/console geoip2:update
 php bin/console geoip2:update
 ```
 
-### From composer
+### Auto update from composer
 
 Add to your `composer.json` event callbacks in a `scripts` section:
 
@@ -117,22 +117,49 @@ Add to your `composer.json` event callbacks in a `scripts` section:
 {
     "scripts": {
         "post-install-cmd": [
-            "GpsLab\\Bundle\\GeoIP2Bundle\\Composer\\ScriptHandler::updateDatabase"
+            "app/console geoip2:update"
         ],
         "post-update-cmd": [
-            "GpsLab\\Bundle\\GeoIP2Bundle\\Composer\\ScriptHandler::updateDatabase"
+            "app/console geoip2:update"
         ]
     }
 }
 ```
 
-**Symfony >3.1**
+**Symfony 3.0 - 3.1**
+
+```json
+{
+    "scripts": {
+        "post-install-cmd": [
+            "bin/console geoip2:update"
+        ],
+        "post-update-cmd": [
+            "bin/console geoip2:update"
+        ]
+    }
+}
+```
+
+**Symfony 3.1 - 4.0**
 
 ```json
 {
     "scripts": {
         "symfony-scripts": [
-            "GpsLab\\Bundle\\GeoIP2Bundle\\Composer\\ScriptHandler::updateDatabase"
+            "bin/console geoip2:update"
+        ]
+    }
+}
+```
+
+**Symfony >4.0**
+
+```json
+{
+    "scripts": {
+        "auto-scripts": [
+            "geoip2:update": "symfony-cmd"
         ]
     }
 }
