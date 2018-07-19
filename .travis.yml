@@ -44,6 +44,8 @@ before_install:
 
 before_script:
     - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --dev --no-update; fi;
+    - composer require "scrutinizer/ocular" --dev --no-update
+    - composer require "php-coveralls/php-coveralls" --dev --no-update
     - composer install --prefer-dist --no-interaction --no-scripts --no-progress
 
 script:
