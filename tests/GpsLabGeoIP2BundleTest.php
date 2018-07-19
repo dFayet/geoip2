@@ -13,8 +13,9 @@ namespace GpsLab\Bundle\PaginationBundle\Tests;
 
 use GpsLab\Bundle\GeoIP2Bundle\DependencyInjection\GpsLabGeoIP2Extension;
 use GpsLab\Bundle\GeoIP2Bundle\GpsLabGeoIP2Bundle;
+use PHPUnit\Framework\TestCase;
 
-class GpsLabGeoIP2BundleTest extends \PHPUnit_Framework_TestCase
+class GpsLabGeoIP2BundleTest extends TestCase
 {
     public function testGetContainerExtension(): void
     {

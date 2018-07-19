@@ -12,9 +12,10 @@ declare(strict_types=1);
 namespace GpsLab\Bundle\PaginationBundle\Tests\DependencyInjection;
 
 use GpsLab\Bundle\GeoIP2Bundle\DependencyInjection\GpsLabGeoIP2Extension;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class GpsLabGeoIP2ExtensionTest extends \PHPUnit_Framework_TestCase
+class GpsLabGeoIP2ExtensionTest extends TestCase
 {
     public function testLoad(): void
     {
