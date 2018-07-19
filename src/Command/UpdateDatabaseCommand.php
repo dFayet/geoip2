@@ -5,7 +5,7 @@ declare(strict_types=1);
  * GpsLab component.
  *
  * @author    Peter Gribanov <info@peter-gribanov.ru>
- * @copyright Copyright (c) 2017, Peter Gribanov
+ * @copyright Copyright (c) 2018, Peter Gribanov
  * @license   http://opensource.org/licenses/MIT
  */
 
@@ -48,11 +48,11 @@ class UpdateDatabaseCommand extends Command
     private $cache = '';
 
     /**
-     * @param Filesystem $fs
-     * @param Stopwatch $stopwatch
+     * @param Filesystem          $fs
+     * @param Stopwatch           $stopwatch
      * @param CompressorInterface $compressor
-     * @param string $url
-     * @param string $cache
+     * @param string              $url
+     * @param string              $cache
      */
     public function __construct(
         Filesystem $fs,
@@ -91,7 +91,7 @@ class UpdateDatabaseCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      *
      * @return int

@@ -5,7 +5,7 @@ declare(strict_types=1);
  * GpsLab component.
  *
  * @author    Peter Gribanov <info@peter-gribanov.ru>
- * @copyright Copyright (c) 2017, Peter Gribanov
+ * @copyright Copyright (c) 2018, Peter Gribanov
  * @license   http://opensource.org/licenses/MIT
  */
 
@@ -42,10 +42,10 @@ class ScriptHandler
     }
 
     /**
-     * @param Event $event
+     * @param Event  $event
      * @param string $console_dir
      * @param string $cmd
-     * @param float $timeout
+     * @param float  $timeout
      */
     private static function executeCommand(Event $event, string $console_dir, string $cmd, float $timeout = 300): void
     {
