@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * GpsLab component.
  *
@@ -28,7 +30,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        return (new TreeBuilder())
+        $tree = new TreeBuilder();
+        $tree
             ->root('gpslab_geoip')
                 ->children()
                     ->scalarNode('cache')
@@ -47,5 +50,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end()
         ;
+
+        return $tree;
     }
 }

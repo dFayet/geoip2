@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * GpsLab component.
  *
@@ -27,7 +29,7 @@ class ScriptHandler
     /**
      * @param Event $event
      */
-    public static function updateDatabase(Event $event)
+    public static function updateDatabase(Event $event): void
     {
         $options = static::getOptions($event);
         $console_dir = static::getConsoleDir($event, 'clear the cache');
@@ -43,9 +45,9 @@ class ScriptHandler
      * @param Event $event
      * @param string $console_dir
      * @param string $cmd
-     * @param int $timeout
+     * @param float $timeout
      */
-    protected static function executeCommand(Event $event, $console_dir, $cmd, $timeout = 300)
+    private static function executeCommand(Event $event, string $console_dir, string $cmd, float $timeout = 300): void
     {
         $php = escapeshellarg(self::getPhp(false));
         $php_args = implode(' ', array_map('escapeshellarg', self::getPhpArguments()));
@@ -53,7 +55,8 @@ class ScriptHandler
         if ($event->getIO()->isDecorated()) {
             $console .= ' --ansi';
         }
-        $process = new Process($php.($php_args ? ' '.$php_args : '').' '.$console.' '.$cmd, null, null, null, $timeout);
+        $command = $php.($php_args ? ' '.$php_args : '').' '.$console.' '.$cmd;
+        $process = new Process($command, null, null, null, $timeout);
         $process->run(function ($type, $buffer) use ($event) {
             $event->getIO()->write($buffer, false);
         });
@@ -73,7 +76,7 @@ class ScriptHandler
      *
      * @return array
      */
-    protected static function getOptions(Event $event)
+    private static function getOptions(Event $event): array
     {
         $options = array_merge(self::$options, $event->getComposer()->getPackage()->getExtra());
 
@@ -90,20 +93,20 @@ class ScriptHandler
      *
      * @return string|null
      */
-    protected static function getConsoleDir(Event $event, $action_name)
+    private static function getConsoleDir(Event $event, string $action_name): ?string
     {
         $options = static::getOptions($event);
 
         if (self::useNewDirectoryStructure($options)) {
             if (!self::hasDirectory($event, 'symfony-bin-dir', $options['symfony-bin-dir'], $action_name)) {
-                return;
+                return null;
             }
 
             return $options['symfony-bin-dir'];
         }
 
         if (!self::hasDirectory($event, 'symfony-app-dir', $options['symfony-app-dir'], 'execute command')) {
-            return;
+            return null;
         }
 
         return $options['symfony-app-dir'];
@@ -117,7 +120,7 @@ class ScriptHandler
      *
      * @return bool
      */
-    private static function hasDirectory(Event $event, $config_name, $path, $action_name)
+    private static function hasDirectory(Event $event, string $config_name, string $path, string $action_name): bool
     {
         if (!is_dir($path)) {
             $event->getIO()->write(sprintf(
@@ -141,7 +144,7 @@ class ScriptHandler
      *
      * @return bool
      */
-    private static function useNewDirectoryStructure(array $options)
+    private static function useNewDirectoryStructure(array $options): bool
     {
         return isset($options['symfony-var-dir']) && is_dir($options['symfony-var-dir']);
     }
@@ -155,7 +158,7 @@ class ScriptHandler
      *
      * @return string
      */
-    private static function getPhp($include_args = true)
+    private static function getPhp($include_args = true): string
     {
         $phpFinder = new PhpExecutableFinder();
         if (!$phpPath = $phpFinder->find($include_args)) {
@@ -168,7 +171,7 @@ class ScriptHandler
     /**
      * @return array
      */
-    private static function getPhpArguments()
+    private static function getPhpArguments(): array
     {
         $arguments = [];
         $php_finder = new PhpExecutableFinder();

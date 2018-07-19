@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * GpsLab component.
  *
@@ -17,7 +19,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Stopwatch\Stopwatch;
-use Symfony\Component\Stopwatch\StopwatchEvent;
 
 class UpdateDatabaseCommand extends Command
 {
@@ -53,8 +54,13 @@ class UpdateDatabaseCommand extends Command
      * @param string $url
      * @param string $cache
      */
-    public function __construct(Filesystem $fs, Stopwatch $stopwatch, CompressorInterface $compressor, $url, $cache)
-    {
+    public function __construct(
+        Filesystem $fs,
+        Stopwatch $stopwatch,
+        CompressorInterface $compressor,
+        string $url,
+        string $cache
+    ) {
         $this->fs = $fs;
         $this->url = $url;
         $this->cache = $cache;
@@ -120,20 +126,12 @@ class UpdateDatabaseCommand extends Command
 
         $io->success('Finished downloading');
 
-        $this->stopwatch($io, $this->stopwatch->stop('update'));
-
-        return 0;
-    }
-
-    /**
-     * @param SymfonyStyle $io
-     * @param StopwatchEvent $event
-     */
-    private function stopwatch(SymfonyStyle $io, StopwatchEvent $event)
-    {
+        $event = $this->stopwatch->stop('update');
         $io->writeln([
             sprintf('Time: <info>%.2F</info> s.', $event->getDuration() / 1000),
             sprintf('Memory: <info>%.2F</info> MiB.', $event->getMemory() / 1024 / 1024),
         ]);
+
+        return 0;
     }
 }

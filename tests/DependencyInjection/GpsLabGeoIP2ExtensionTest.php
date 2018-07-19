@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * GpsLab component.
  *
@@ -14,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class GpsLabGeoIP2ExtensionTest extends \PHPUnit_Framework_TestCase
 {
-    public function testLoad()
+    public function testLoad(): void
     {
         $container = new ContainerBuilder();
 
@@ -29,7 +31,7 @@ class GpsLabGeoIP2ExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['%locale%'], $container->getParameter('geoip2.locales'));
     }
 
-    public function testGetAlias()
+    public function testGetAlias(): void
     {
         $extension = new GpsLabGeoIP2Extension();
         $this->assertEquals('gpslab_geoip', $extension->getAlias());

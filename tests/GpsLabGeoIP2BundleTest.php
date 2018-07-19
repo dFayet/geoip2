@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * GpsLab component.
  *
@@ -9,18 +11,16 @@
 
 namespace GpsLab\Bundle\PaginationBundle\Tests;
 
+use GpsLab\Bundle\GeoIP2Bundle\DependencyInjection\GpsLabGeoIP2Extension;
 use GpsLab\Bundle\GeoIP2Bundle\GpsLabGeoIP2Bundle;
 
 class GpsLabGeoIP2BundleTest extends \PHPUnit_Framework_TestCase
 {
-    public function testGetContainerExtension()
+    public function testGetContainerExtension(): void
     {
         $bundle = new GpsLabGeoIP2Bundle();
         $extension = $bundle->getContainerExtension();
 
-        $this->assertInstanceOf(
-            'GpsLab\Bundle\GeoIP2Bundle\DependencyInjection\GpsLabGeoIP2Extension',
-            $extension
-        );
+        $this->assertInstanceOf(GpsLabGeoIP2Extension::class, $extension);
     }
 }
