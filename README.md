@@ -96,6 +96,8 @@ The original `GeoIp2\Database\Reader` service reads the database file in the con
 This leads to a decrease in performance if you use the Reader in dependencies, but do not use the methods of Reader.
 It will be more economical to read the database if this is really necessary.
 
+Now you can depend on the interface, not on the implementation.
+
 ## Update GeoIP database
 
 ### From command line
