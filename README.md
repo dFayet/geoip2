@@ -68,8 +68,10 @@ gpslab_geoip:
 You can get GeoIP2 reader service:
 
 ```php
+use GpsLab\Bundle\GeoIP2Bundle\Database\Reader;
+
 // get a GeoIP2 City model
-$record = $this->get('geoip2.reader')->city('128.101.101.101');
+$record = $this->get(Reader::class)->city('128.101.101.101');
 
 print($record->country->isoCode . "\n"); // 'US'
 print($record->country->name . "\n"); // 'United States'
