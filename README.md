@@ -90,6 +90,12 @@ print($record->location->longitude . "\n"); // -93.2323
 
 For more example see the [GeoIP2](https://github.com/maxmind/GeoIP2-php) library.
 
+## Why use a proxy?
+
+The original `GeoIp2\Database\Reader` service reads the database file in the constructor.
+This leads to a decrease in performance if you use the Reader in dependencies, but do not use the methods of Reader.
+It will be more economical to read the database if this is really necessary.
+
 ## Update GeoIP database
 
 ### From command line

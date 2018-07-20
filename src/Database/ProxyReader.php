@@ -58,7 +58,7 @@ class ProxyReader implements Reader
     }
 
     /**
-     * Read DB only if really needs.
+     * Read DB only if really necessary.
      *
      * @return GeoIp2Reader
      */
