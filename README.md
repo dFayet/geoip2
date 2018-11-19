@@ -168,9 +168,9 @@ Add to your `composer.json` event callbacks in a `scripts` section:
 ```json
 {
     "scripts": {
-        "auto-scripts": [
+        "auto-scripts": {
             "geoip2:update": "symfony-cmd"
-        ]
+        }
     }
 }
 ```
