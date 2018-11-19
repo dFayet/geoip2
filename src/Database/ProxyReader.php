@@ -24,7 +24,7 @@ use GeoIp2\Model\Isp;
 use MaxMind\Db\Reader\InvalidDatabaseException;
 use MaxMind\Db\Reader\Metadata;
 
-class ProxyReader implements Reader
+final class ProxyReader implements Reader
 {
     /**
      * The path to the GeoIP2 database file.
