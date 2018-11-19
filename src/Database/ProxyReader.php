@@ -60,6 +60,8 @@ class ProxyReader implements Reader
     /**
      * Read DB only if really necessary.
      *
+     * @throws InvalidDatabaseException If the database is corrupt or invalid
+     *
      * @return GeoIp2Reader
      */
     private function lazyload(): GeoIp2Reader
