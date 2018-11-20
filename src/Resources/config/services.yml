@@ -1,21 +1,28 @@
 services:
-    GpsLab\Bundle\GeoIP2Bundle\Database\ProxyReader:
-        arguments: [ '%geoip2.cache%', '%geoip2.locales%' ]
+    gpslab.geoip2.compressor:
+        class: 'GpsLab\Component\Compressor\GzipCompressor'
         public: false
 
-    GpsLab\Bundle\GeoIP2Bundle\Database\Reader:
-        alias: 'GpsLab\Bundle\GeoIP2Bundle\Database\ProxyReader'
-        public: true
-
-    GpsLab\Bundle\GeoIP2Bundle\Command\UpdateDatabaseCommand:
+    gpslab.geoip2.update_database_command:
+        class: 'GpsLab\Bundle\GeoIP2Bundle\Command\UpdateDatabaseCommand'
         arguments:
             - '@filesystem'
             - '@debug.stopwatch'
-            - '@GpsLab\Component\Compressor\GzipCompressor'
+            - '@geoip2.compressor'
             - '%geoip2.url%'
             - '%geoip2.cache%'
         tags:
             - { name: console.command }
 
-    GpsLab\Component\Compressor\GzipCompressor:
+    gpslab.geoip2.proxy_reader:
+        class: 'GpsLab\Bundle\GeoIP2Bundle\Database\ProxyReader'
+        arguments: [ '%geoip2.cache%', '%geoip2.locales%' ]
         public: false
+
+    GpsLab\Bundle\GeoIP2Bundle\Database\Reader:
+        alias: 'geoip2.proxy_reader'
+        public: true
+
+    geoip2.reader:
+        alias: 'geoip2.proxy_reader'
+        public: true
