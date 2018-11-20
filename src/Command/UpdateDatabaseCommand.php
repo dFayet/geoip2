@@ -109,8 +109,8 @@ class UpdateDatabaseCommand extends Command
             $this->stopwatch->start('update');
         }
 
-        $tmp_zip = sys_get_temp_dir().DIRECTORY_SEPARATOR.basename(parse_url($url, PHP_URL_PATH));
-        $tmp_unzip = sys_get_temp_dir().DIRECTORY_SEPARATOR.basename($target);
+        $tmp_zip = tempnam(sys_get_temp_dir(), basename(parse_url($url, PHP_URL_PATH)));
+        $tmp_unzip = tempnam(sys_get_temp_dir(), basename($target));
 
         $io->comment(sprintf('Beginning download of file: %s', $url));
 
