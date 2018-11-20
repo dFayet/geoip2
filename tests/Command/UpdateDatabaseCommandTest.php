@@ -13,7 +13,7 @@ namespace GpsLab\Bundle\GeoIP2Bundle\Tests\Command;
 use GpsLab\Bundle\GeoIP2Bundle\Command\UpdateDatabaseCommand;
 use GpsLab\Component\Compressor\GzipCompressor;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -43,7 +43,7 @@ class UpdateDatabaseCommandTest extends TestCase
     {
         $output = new BufferedOutput();
         $command = new UpdateDatabaseCommand(new Filesystem(), new GzipCompressor(), self::URL, $this->target);
-        $command->run(new ArgvInput(), $output);
+        $command->run(new ArrayInput([]), $output);
 
         if (class_exists(Stopwatch::class)) {
             $command->setStopwatch(new Stopwatch());
