@@ -51,14 +51,14 @@ final class ProxyReader implements Reader
      * @param string $filename The path to the GeoIP2 database file
      * @param array  $locales  List of locale codes to use in name property from most preferred to least preferred
      */
-    public function __construct($filename, $locales = ['en'])
+    public function __construct(string $filename, array $locales = ['en'])
     {
         $this->filename = $filename;
         $this->locales = $locales;
     }
 
     /**
-     * Read DB only if really necessary.
+     * Read the GeoIP2 database only if really necessary.
      *
      * @throws InvalidDatabaseException If the database is corrupt or invalid
      *
@@ -196,6 +196,7 @@ final class ProxyReader implements Reader
     /**
      * @throws \InvalidArgumentException If arguments are passed to the method
      * @throws \BadMethodCallException   If the database has been closed
+     * @throws InvalidDatabaseException If the database is corrupt or invalid
      *
      * @return Metadata object for the database
      */
@@ -209,6 +210,8 @@ final class ProxyReader implements Reader
      */
     public function close(): void
     {
-        $this->lazyload()->close();
+        if ($this->instance instanceof GeoIp2Reader) {
+            $this->instance->close();
+        }
     }
 }
