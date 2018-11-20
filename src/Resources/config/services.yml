@@ -7,10 +7,11 @@ services:
         class: 'GpsLab\Bundle\GeoIP2Bundle\Command\UpdateDatabaseCommand'
         arguments:
             - '@filesystem'
-            - '@debug.stopwatch'
             - '@gpslab.geoip2.compressor'
             - '%geoip2.url%'
             - '%geoip2.cache%'
+        calls:
+            - [setStopwatch, ['@?debug.stopwatch']]
         tags:
             - { name: console.command }
 

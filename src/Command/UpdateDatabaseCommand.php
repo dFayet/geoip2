@@ -23,7 +23,7 @@ use Symfony\Component\Stopwatch\Stopwatch;
 class UpdateDatabaseCommand extends Command
 {
     /**
-     * @var Stopwatch
+     * @var Stopwatch|null
      */
     private $stopwatch;
 
@@ -49,25 +49,26 @@ class UpdateDatabaseCommand extends Command
 
     /**
      * @param Filesystem          $fs
-     * @param Stopwatch           $stopwatch
      * @param CompressorInterface $compressor
      * @param string              $url
      * @param string              $cache
      */
-    public function __construct(
-        Filesystem $fs,
-        Stopwatch $stopwatch,
-        CompressorInterface $compressor,
-        string $url,
-        string $cache
-    ) {
+    public function __construct(Filesystem $fs, CompressorInterface $compressor, string $url, string $cache)
+    {
         $this->fs = $fs;
         $this->url = $url;
         $this->cache = $cache;
-        $this->stopwatch = $stopwatch;
         $this->compressor = $compressor;
 
         parent::__construct();
+    }
+
+    /**
+     * @param Stopwatch $stopwatch
+     */
+    public function setStopwatch(Stopwatch $stopwatch): void
+    {
+        $this->stopwatch = $stopwatch;
     }
 
     protected function configure()
@@ -103,7 +104,10 @@ class UpdateDatabaseCommand extends Command
         $target = $input->getArgument('target');
 
         $io->title('Update the GeoIP2 database');
-        $this->stopwatch->start('update');
+
+        if ($this->stopwatch instanceof Stopwatch) {
+            $this->stopwatch->start('update');
+        }
 
         $tmp_zip = sys_get_temp_dir().DIRECTORY_SEPARATOR.basename(parse_url($url, PHP_URL_PATH));
         $tmp_unzip = sys_get_temp_dir().DIRECTORY_SEPARATOR.basename($target);
@@ -126,11 +130,13 @@ class UpdateDatabaseCommand extends Command
 
         $io->success('Finished downloading');
 
-        $event = $this->stopwatch->stop('update');
-        $io->writeln([
-            sprintf('Time: <info>%.2F</info> s.', $event->getDuration() / 1000),
-            sprintf('Memory: <info>%.2F</info> MiB.', $event->getMemory() / 1024 / 1024),
-        ]);
+        if ($this->stopwatch instanceof Stopwatch) {
+            $event = $this->stopwatch->stop('update');
+            $io->writeln([
+                sprintf('Time: <info>%.2F</info> s.', $event->getDuration() / 1000),
+                sprintf('Memory: <info>%.2F</info> MiB.', $event->getMemory() / 1024 / 1024),
+            ]);
+        }
 
         return 0;
     }
