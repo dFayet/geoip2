@@ -50,11 +50,11 @@ Default configuration:
 
 ```yml
 gpslab_geoip:
-    # Path to download GeoIP database.
+    # Target path to download the GeoIP2 database.
     # It's a default value. You can change it.
     cache: '%kernel.cache_dir%/GeoLite2-City.mmdb'
 
-    # URL for download new GeoIP database.
+    # URL for download new the GeoIP2 database.
     # It's a default value. You can change it.
     url: 'http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz'
 

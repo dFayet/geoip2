@@ -45,19 +45,19 @@ class UpdateDatabaseCommand extends Command
     /**
      * @var string
      */
-    private $cache = '';
+    private $target = '';
 
     /**
      * @param Filesystem          $fs
      * @param CompressorInterface $compressor
      * @param string              $url
-     * @param string              $cache
+     * @param string              $target
      */
-    public function __construct(Filesystem $fs, CompressorInterface $compressor, string $url, string $cache)
+    public function __construct(Filesystem $fs, CompressorInterface $compressor, string $url, string $target)
     {
         $this->fs = $fs;
         $this->url = $url;
-        $this->cache = $cache;
+        $this->target = $target;
         $this->compressor = $compressor;
 
         parent::__construct();
@@ -79,14 +79,14 @@ class UpdateDatabaseCommand extends Command
             ->addArgument(
                 'url',
                 InputArgument::OPTIONAL,
-                'URL to downloaded GeoIP2 database',
+                'URL to downloaded the GeoIP2 database',
                 $this->url
             )
             ->addArgument(
                 'target',
                 InputArgument::OPTIONAL,
-                'Target download path',
-                $this->cache
+                'Target path to download the GeoIP2 database',
+                $this->target
             )
         ;
     }
