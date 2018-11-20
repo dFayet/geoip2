@@ -20,9 +20,9 @@ services:
         public: false
 
     GpsLab\Bundle\GeoIP2Bundle\Database\Reader:
-        alias: 'geoip2.proxy_reader'
+        alias: 'gpslab.geoip2.proxy_reader'
         public: true
 
     geoip2.reader:
-        alias: 'geoip2.proxy_reader'
+        alias: 'gpslab.geoip2.proxy_reader'
         public: true
